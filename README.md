@@ -8,6 +8,15 @@ This repo contains the implementation for paper
 - System: RedHat
 - fairseq: see submodule
 
+## Prepare and install fairseq
+
+```
+git clone https://github.com/pytorch/fairseq.git
+cd fairseq
+git checkout fbd4cef
+pip install --editable .
+```
+
 ## Data Preprocessing
 
 ```bash
