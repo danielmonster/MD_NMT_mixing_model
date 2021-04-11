@@ -289,9 +289,6 @@ def merge_files(files, outpath):
 
 def cli_main():
     parser = options.get_preprocessing_parser()
-    parser.add_argument('--output-format', metavar='FORMAT', \
-             default='binary', choices=['binary', 'raw'],\
-             help='output format (optional)')
     args = parser.parse_args()
     main(args)
 
