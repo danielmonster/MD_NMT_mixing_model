@@ -20,7 +20,7 @@ if [ ! -d "$SCRIPTS" ]; then
     exit
 fi
 ############################## Change ###############################
-URL="https://wit3.fbk.eu/archive/2014-01/texts/en/de/en-de.tgz"
+URL_ID="1GnBarJIbNgEIIDvUyKDtLmv35Qcxg6Ed"
 GZ=en-de.tgz
 
 src=en
@@ -36,7 +36,10 @@ mkdir -p $orig $tmp $prep
 
 echo "Downloading data from ${URL}..."
 cd $orig
-wget "$URL"
+gdown --id "$URL_ID"
+tar zxvf 2014-01.tgz
+mv 2014-01/texts/en/de/en-de.tgz .
+rm -rf 2014-01.tgz
 
 if [ -f $GZ ]; then
     echo "Data successfully downloaded."
