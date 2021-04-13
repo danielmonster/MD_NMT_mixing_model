@@ -89,7 +89,7 @@ CUDA_VISIBLE_DEVICES=0 python main.py data-bin/mixed \
 ## Evaluation
 
 ```
-conda create -n test
+conda create -n test python=3.7
 conda activate test
 conda install -c conda-forge pytorch cudatoolkit=11.0 fairseq==0.10.1 sentencepiece
 ```
