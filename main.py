@@ -422,7 +422,7 @@ def add_damethod_args(parser):
     group.add_argument('--multidatasource', default='mixed',
                        choices=['0', '1', '2', '3', 'mixed'],
                        help='Use which dataset')
-    group.add_argument('--domain-nums', default=2,
+    group.add_argument('--domain-nums', default=20,
                        help='number of domains used in mixed setting (auto adjust)')
     group.add_argument('--damethod', default='naive',
                        choices=['naive', 'multitask_classifier', 'multitask_tag', 'pure_adv', 'partial_adv', 'bayesian'],

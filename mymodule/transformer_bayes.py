@@ -673,6 +673,7 @@ class TransformerBayesDecoderLayer(nn.Module):
     def __init__(self, args, no_encoder_attn=False):
         super().__init__()
         self.embed_dim = args.decoder_embed_dim
+        #args.domain_nums = 20
         self.self_attn = BayesMultiheadAttention(
             self.embed_dim, args.decoder_attention_heads,
             dropout=args.attention_dropout, domain_nums = args.domain_nums,
@@ -694,6 +695,7 @@ class TransformerBayesDecoderLayer(nn.Module):
             self.encoder_attn_layer_norm = LayerNorm(self.embed_dim)
 
         self.domain_nums = args.domain_nums
+        print("domain_nums {}".format(self.domain_nums))
         self.fc1 = Linear(self.embed_dim, args.decoder_ffn_embed_dim*args.domain_nums)
         self.fc2 = Linear(args.decoder_ffn_embed_dim, self.embed_dim*args.domain_nums)
 

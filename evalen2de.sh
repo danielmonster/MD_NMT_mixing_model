@@ -1,5 +1,5 @@
 #!/bin/bash
-
+export PYTHONPATH='/home/ubuntu/MD_NMT_mixing_model/fairseq/fairseq/:$PYTHONPATH'
 if [[ $# -ne 2  ]]; then
       echo "Usage:   \"bash evalen2de.sh SAVEDIR GPUID\""
       exit 0
