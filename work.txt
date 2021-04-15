@@ -1,8 +1,13 @@
+# python3 split.py --lang=en --domain_nums=5
+# python3 split.py --lang=de --domain_nums=5
+
+WMTTEXT=dataset/wmt14_en_de
+IWSLTTEXT=dataset/iwslt14.tokenized.en-de
 TEDPATH=dataset/ted_domains/3
 python multidata_preprocess.py --source-lang en --target-lang de \
   --trainpref $TEDPATH/train.domain1,$TEDPATH/train.domain2,$TEDPATH/train.domain3 \
-  --validpref $WMTTEXT/valid,$IWSLTTEXT/valid \
-  --testpref $WMTTEXT/test,$IWSLTTEXT/test \
+  --validpref $IWSLTTEXT/valid \
+  --testpref $IWSLTTEXT/test \
   --destdir data-bin/expr3 --thresholdtgt 0 --thresholdsrc 0
 
 
@@ -10,10 +15,17 @@ python multidata_preprocess.py --source-lang en --target-lang de \
 TEDPATH=dataset/ted_domains/5
 python multidata_preprocess.py --source-lang en --target-lang de \
   --trainpref $TEDPATH/train.domain1,$TEDPATH/train.domain2,$TEDPATH/train.domain3,$TEDPATH/train.domain4,$TEDPATH/train.domain5 \
-  --validpref $WMTTEXT/valid,$IWSLTTEXT/valid \
-  --testpref $WMTTEXT/test,$IWSLTTEXT/test \
+  --validpref $IWSLTTEXT/valid \
+  --testpref $IWSLTTEXT/test \
   --destdir data-bin/expr5 --thresholdtgt 0 --thresholdsrc 0
 
+
+TEDPATH=dataset/ted_domains/10
+python multidata_preprocess.py --source-lang en --target-lang de \
+  --trainpref $TEDPATH/train.domain1,$TEDPATH/train.domain2,$TEDPATH/train.domain3,$TEDPATH/train.domain4,$TEDPATH/train.domain5,$TEDPATH/train.domain6,$TEDPATH/train.domain7,$TEDPATH/train.domain8,$TEDPATH/train.domain9,$TEDPATH/train.domain10 \
+  --validpref $IWSLTTEXT/valid \
+  --testpref $IWSLTTEXT/test \
+  --destdir data-bin/expr10 --thresholdtgt 0 --thresholdsrc 0
 
 
 SAVEDIR=checkpoints/Mixed_do5
@@ -41,3 +53,16 @@ CUDA_VISIBLE_DEVICES=0 python main.py data-bin/expr3 \
   --warmup-updates 4000 --warmup-init-lr '1e-07' \
   --adam-betas '(0.9, 0.98)' --save-dir $SAVEDIR \
   --task translation_da --domain-nums 3
+
+
+SAVEDIR=checkpoints/Mixed_do10
+mkdir -p $SAVEDIR
+CUDA_VISIBLE_DEVICES=0 python main.py data-bin/expr10 \
+  --multidatasource mixed --damethod bayesian -a transformer_da_bayes_iwslt_de_en\
+  --optimizer adam --lr 0.0005 -s en -t de \
+  --label-smoothing 0.1 --dropout 0.3 --max-tokens 4000 \
+  --min-lr '1e-09' --lr-scheduler inverse_sqrt --weight-decay 0.0001 \
+  --criterion cross_entropy_da --max-epoch 3 \
+  --warmup-updates 4000 --warmup-init-lr '1e-07' \
+  --adam-betas '(0.9, 0.98)' --save-dir $SAVEDIR \
+  --task translation_da --domain-nums 10
